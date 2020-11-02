@@ -8,19 +8,19 @@ from datetime import datetime
 
 window = Tk()
 
-window.title("Vocabulary Trainer")
+window.title("Vocab!")
 window.geometry('303x190')
 
 
 def clicked_practice():
-    Quiz()
+    quiz = Quiz()
 
 def clicked_add():
     AddVocab()
 
 def clicked_excel():
-    dt_string = datetime.now().strftime("%d_%m_%Y %H-%M-%S")
-    filename = 'Vocabulary {}.xlsx'.format(dt_string)
+    dt_string = datetime.now().strftime("%Y_%m_%d %H-%M-%S")
+    filename = 'Vocab!      {}.xlsx'.format(dt_string)
     vocab_table = pd.read_csv('vocabulary.csv', index_col=[0])
     vocab_table.to_excel(filename)
     startfile(filename)
