@@ -10,6 +10,7 @@ class AddVocab:
 
         # set up GUI
         self.root = Tk()
+        self.root.eval('tk::PlaceWindow . center') # centers window
         self.root.title("Vocab!")
         self.root.geometry('350x400')
         self.lbl1 = Label(self.root, text="\nAdd new vocabulary!")

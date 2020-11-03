@@ -8,6 +8,8 @@ class Quiz:
     def __init__(self):
         # set up GUI
         self.root = Tk()
+
+        self.root.eval('tk::PlaceWindow . center') # centers window
         self.root.title("Vocab!")
         self.root.geometry('350x400')
 
@@ -51,10 +53,12 @@ class Quiz:
     def initialize_table(self):
         if not os.path.isfile('vocabulary.csv'):
             NoTable()
+            print("Initializing: Could not find existing table.")
             self.root.destroy()
 
         else:
             vocab_table = pd.read_csv('vocabulary.csv', index_col=[0])
+            print("Initializing: Found existing table with {} entries.\n".format(vocab_table.Foreign.count()))
             return vocab_table
 
 
@@ -64,8 +68,7 @@ class Quiz:
         except IndexError:
             QuizFinished()
             self.root.destroy()
-        print(self.quiz_index)
-        print(self.quiz_range)
+
         self.quiz_foreign = self.vocab_table.iloc[self.quiz_index][0]
         self.quiz_meaning1 = self.vocab_table.iloc[self.quiz_index][1]
         self.quiz_meaning2 = self.vocab_table.iloc[self.quiz_index][2]
@@ -104,7 +107,6 @@ class Quiz:
 
 
     def clicked_submit(self):
-        print(self.input_Foreign.get() == self.quiz_foreign)
         self.hide_meanings()
         self.lblEvaluation.place(relx=0.5, rely=0.55, anchor='center')
 
@@ -124,7 +126,6 @@ class Quiz:
         self.lblRightAnswer.place_forget()
         self.place_meanings()
         self.get_quiz_term()
-        print(self.quiz_foreign)
         self.btnSubmit.config(text='Submit answer', command=self.clicked_submit)
 
 
@@ -134,13 +135,11 @@ class Quiz:
             self.vocab_table.reset_index(inplace=True, drop=True)
             self.quiz_range = list(range(self.vocab_table.Foreign.count()))
             random.shuffle(self.quiz_range)
-            print(self.vocab_table)
-            print(self.quiz_index)
             self.vocab_table.to_csv('vocabulary.csv')
             self.clicked_submit()
             self.clicked_confirm()
             DeleteSuccesful()
-            print("Delete succesful!")
+
         else:
             NoTable()
 
@@ -148,31 +147,39 @@ class Quiz:
 class NoTable:
     def __init__(self):
         self.root = Tk()
+        self.root.eval('tk::PlaceWindow . center') # centers window
         self.root.geometry('150x100')
-        self.lbl1 = Label(self.root, text="No entries found.\n\nAdd vocabulary first!")
-        # self.lbl1.config(font=('Arial', 18))
+        self.root.config(bg='lightblue')
+        self.lbl1 = Label(self.root, bg='lightblue', text="No entries found.\n\nAdd vocabulary first!")
+        self.lbl1.config(font=("Arial", 10, "bold"))
         self.lbl1.place(relx=0.5, rely=0.5, anchor='center')
 
 class QuizFinished:
     def __init__(self):
         self.root = Tk()
+        self.root.eval('tk::PlaceWindow . center')  # centers window
         self.root.geometry('150x100')
-        self.lbl1 = Label(self.root, text="No more entries.\nNice work!")
-        # self.lbl1.config(font=('Arial', 18))
+        self.root.config(bg='lightblue')
+        self.lbl1 = Label(self.root, bg='lightblue', text="No more entries.\nNice work!")
+        self.lbl1.config(font=("Arial", 10, "bold"))
         self.lbl1.place(relx=0.5, rely=0.5, anchor='center')
 
 class Congrats:
     def __init__(self):
         self.root = Tk()
+        self.root.eval('tk::PlaceWindow . center')  # centers window
         self.root.geometry('150x100')
-        self.lbl1 = Label(self.root, text="Correct!")
-        # self.lbl1.config(font=('Arial', 18))
+        self.root.config(bg='lightblue')
+        self.lbl1 = Label(self.root, bg='lightblue', text="Correct!")
+        self.lbl1.config(font=("Arial", 10, "bold"))
         self.lbl1.place(relx=0.5, rely=0.5, anchor='center')
 
 class DeleteSuccesful:
     def __init__(self):
         self.root = Tk()
+        self.root.eval('tk::PlaceWindow . center')  # centers window
         self.root.geometry('150x100')
-        self.lbl1 = Label(self.root, text="Entry deleted!")
-        # self.lbl1.config(font=('Arial', 18))
+        self.root.config(bg="lightblue")
+        self.lbl1 = Label(self.root, bg="lightblue", text="Entry deleted!")
+        self.lbl1.config(font=("Arial", 10, "bold"))
         self.lbl1.place(relx=0.5, rely=0.5, anchor='center')

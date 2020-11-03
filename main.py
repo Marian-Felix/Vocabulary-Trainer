@@ -6,10 +6,11 @@ from quiz import Quiz, NoTable
 from datetime import datetime
 
 
-window = Tk()
+root = Tk()
 
-window.title("Vocab!")
-window.geometry('303x190')
+root.eval('tk::PlaceWindow . center') # centers window
+root.title("Vocab!")
+root.geometry('303x190')
 
 
 def clicked_practice():
@@ -29,11 +30,11 @@ def clicked_excel():
         NoTable()
 
 
-btn1 = Button(window, text="Add Vocabulary", command=clicked_add)
+btn1 = Button(root, text="Add Vocabulary", command=clicked_add)
 btn1.config(height=8, width=20)
-btn2 = Button(window, text="Practice", command=clicked_practice)
+btn2 = Button(root, text="Practice", command=clicked_practice)
 btn2.config(height=8, width=20)
-btn3 = Button(window, text="Create Excel", command=clicked_excel)
+btn3 = Button(root, text="Create Excel", command=clicked_excel)
 btn3.config(height=3, width=25)
 
 btn1.grid(column=0, row=0)
@@ -41,4 +42,4 @@ btn2.grid(column=1, row=0)
 btn3.grid(column=0, row=1, columnspan=2)
 
 
-window.mainloop()
+root.mainloop()
