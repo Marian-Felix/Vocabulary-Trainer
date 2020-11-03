@@ -2,7 +2,7 @@ from tkinter import *
 from os import startfile
 import pandas as pd
 from add_vocab import AddVocab
-from quiz import Quiz
+from quiz import Quiz, NoTable
 from datetime import datetime
 
 
@@ -21,9 +21,12 @@ def clicked_add():
 def clicked_excel():
     dt_string = datetime.now().strftime("%Y_%m_%d %H-%M-%S")
     filename = 'Vocab!      {}.xlsx'.format(dt_string)
-    vocab_table = pd.read_csv('vocabulary.csv', index_col=[0])
-    vocab_table.to_excel(filename)
-    startfile(filename)
+    try:
+        vocab_table = pd.read_csv('vocabulary.csv', index_col=[0])
+        vocab_table.to_excel(filename)
+        startfile(filename)
+    except FileNotFoundError:
+        NoTable()
 
 
 btn1 = Button(window, text="Add Vocabulary", command=clicked_add)

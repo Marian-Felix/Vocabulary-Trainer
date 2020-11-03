@@ -1,12 +1,12 @@
+import os.path
 import pandas as pd
 from tkinter import *
-import initialize
 
 
 class AddVocab:
     def __init__(self):
         # read existing table or create new one
-        self.vocab_table = initialize.initialize_addVocab()
+        self.vocab_table = self.initialize_table()
 
         # set up GUI
         self.root = Tk()
@@ -52,6 +52,17 @@ class AddVocab:
         new_vocab_table.reset_index(inplace=True, drop=True)
         new_vocab_table.to_csv('vocabulary.csv')
         self.root.destroy()
+
+    def initialize_table(self):
+        if not os.path.isfile('vocabulary.csv'):
+            vocab_table = pd.DataFrame(columns=['Foreign', 'Meaning1', 'Meaning2', 'Meaning3'])
+            vocab_table.to_csv('vocabulary.csv')
+            print("Initializing: Could not find existing table. Created new table.\n")
+
+        else:
+            vocab_table = pd.read_csv('vocabulary.csv', index_col=[0])
+            print("Initializing: Found existing table with {} entries.\n".format(vocab_table.Foreign.count()))
+        return vocab_table
 
 
 
