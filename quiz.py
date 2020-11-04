@@ -114,7 +114,7 @@ class Quiz:
             self.lblEvaluation.config(fg='green', text='Correct!')
 
         else:
-            self.lblEvaluation.config(fg='orange', text='Incorrect')
+            self.lblEvaluation.config(fg='orange', text='Nope')
             self.lblRightAnswer.config(text='Correct answer: {}'.format(self.quiz_foreign))
             self.lblRightAnswer.place(relx=0.5, rely=0.65, anchor='center')
 
